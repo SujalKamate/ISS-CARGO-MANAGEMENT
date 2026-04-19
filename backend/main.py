@@ -1,12 +1,23 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from db import get_connection
 
+# ✅ FIRST create app
 app = FastAPI()
 
+# ✅ THEN add middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ✅ THEN routes
 @app.get("/")
 def home():
     return {"message": "ISS Cargo Backend Running 🚀"}
-
 @app.get("/items")
 def get_items():
     conn = get_connection()
