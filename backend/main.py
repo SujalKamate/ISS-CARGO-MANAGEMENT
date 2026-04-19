@@ -52,3 +52,51 @@ def retrieve_item_api(item_id: str):
     finally:
         cursor.close()
         conn.close()
+
+from pydantic import BaseModel
+
+class PlacementRequest(BaseModel):
+    item_id: str
+    container_id: str
+    start_width: float
+    start_depth: float
+    start_height: float
+    end_width: float
+    end_depth: float
+    end_height: float
+
+
+@app.post("/place")
+def place_item_api(data: PlacementRequest):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("""
+            INSERT INTO Placements (
+                item_id, container_id,
+                start_width, start_depth, start_height,
+                end_width, end_depth, end_height
+            )
+            VALUES (:1, :2, :3, :4, :5, :6, :7, :8)
+        """, (
+            data.item_id,
+            data.container_id,
+            data.start_width,
+            data.start_depth,
+            data.start_height,
+            data.end_width,
+            data.end_depth,
+            data.end_height
+        ))
+
+        conn.commit()
+
+        return {"message": "Item placed successfully"}
+
+    except Exception as e:
+        return {"error": str(e)}
+
+    finally:
+        cursor.close()
+        conn.close()
