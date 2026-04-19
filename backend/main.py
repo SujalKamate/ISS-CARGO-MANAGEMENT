@@ -100,3 +100,46 @@ def place_item_api(data: PlacementRequest):
     finally:
         cursor.close()
         conn.close()
+
+@app.get("/smart-search/{item_id}")
+def smart_search(item_id: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Get target item position
+        cursor.execute("""
+            SELECT container_id, start_depth
+            FROM Placements
+            WHERE item_id = :1
+        """, (item_id,))
+        
+        result = cursor.fetchone()
+
+        if not result:
+            return {"error": "Item not found"}
+
+        container_id, depth = result
+
+        # Count blocking items (simple logic: items deeper inside)
+        cursor.execute("""
+            SELECT COUNT(*)
+            FROM Placements
+            WHERE container_id = :1
+            AND start_depth < :2
+        """, (container_id, depth))
+
+        blocking_count = cursor.fetchone()[0]
+
+        return {
+            "item_id": item_id,
+            "container": container_id,
+            "retrieval_steps": blocking_count
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+
+    finally:
+        cursor.close()
+        conn.close()
