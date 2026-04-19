@@ -39,3 +39,16 @@ def search_item(item_name: str):
     conn.close()
 
     return {"results": rows}
+@app.post("/retrieve/{item_id}")
+def retrieve_item_api(item_id: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.callproc("retrieve_item", [item_id])
+        return {"message": f"Item {item_id} retrieved successfully"}
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
