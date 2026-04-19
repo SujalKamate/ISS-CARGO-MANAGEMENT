@@ -143,3 +143,39 @@ def smart_search(item_id: str):
     finally:
         cursor.close()
         conn.close()
+
+# 1) Get expired items (based on expiry_date)
+@app.get("/waste/expired")
+def get_expired_items():
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            SELECT item_id, name, expiry_date
+            FROM Items
+            WHERE expiry_date IS NOT NULL
+            AND expiry_date < SYSDATE
+        """)
+        rows = cursor.fetchall()
+        return {"expired_items": rows}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+# 2) Get items already marked as waste (by trigger)
+@app.get("/waste")
+def get_waste_items():
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            SELECT w.item_id, i.name, w.reason
+            FROM Waste w
+            JOIN Items i ON w.item_id = i.item_id
+        """)
+        rows = cursor.fetchall()
+        return {"waste_items": rows}
+    finally:
+        cursor.close()
+        conn.close()
