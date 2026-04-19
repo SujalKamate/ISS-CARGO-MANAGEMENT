@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ISS Cargo System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🚀 ISS Cargo Management System</h1>
+
+<!-- SEARCH -->
+<h2>🔍 Search Item</h2>
+<input type="text" id="searchInput" placeholder="Enter item name">
+<button onclick="searchItem()">Search</button>
+
+<!-- SMART SEARCH -->
+<h2>🧠 Smart Search</h2>
+<input type="text" id="smartInput" placeholder="Enter item ID">
+<button onclick="smartSearch()">Find</button>
+
+<!-- RETRIEVE -->
+<h2>🔄 Retrieve Item</h2>
+<input type="text" id="retrieveInput" placeholder="Enter item ID">
+<button onclick="retrieveItem()">Retrieve</button>
+
+<!-- WASTE -->
+<h2>🗑️ Waste Items</h2>
+<button onclick="getWaste()">Show Waste</button>
+
+<!-- OUTPUT -->
+<h2>📊 Output</h2>
+<pre id="output"></pre>
+
+<script src="script.js"></script>
+
+</body>
+</html>
