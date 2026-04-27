@@ -1,7 +1,7 @@
-import cx_Oracle
+import oracledb
 
 def get_connection():
-    return cx_Oracle.connect(
+    return oracledb.connect(
         user="system",
         password="root347",
         dsn="localhost/XE"
