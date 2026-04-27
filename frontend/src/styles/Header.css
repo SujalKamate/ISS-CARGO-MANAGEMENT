@@ -1,0 +1,86 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+  height: var(--header-height);
+  z-index: 100;
+}
+
+.header-left h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  letter-spacing: 3px;
+}
+
+.header-left .subtext {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.65rem;
+  font-family: 'Orbitron', sans-serif;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Status Colors */
+.status-badge.active .pulse-dot {
+  background: #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+}
+.status-badge.active .status-text { color: #00ff00; }
+
+.status-badge.processing .pulse-dot {
+  background: #ffcc00;
+  box-shadow: 0 0 10px #ffcc00;
+  animation: pulse 1s infinite;
+}
+.status-badge.processing .status-text { color: #ffcc00; }
+
+.status-badge.error .pulse-dot {
+  background: #ff4444;
+  box-shadow: 0 0 10px #ff4444;
+}
+.status-badge.error .status-text { color: #ff4444; }
+
+.time-display {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    gap: 1rem;
+  }
+  .time-display {
+    display: none;
+  }
+}

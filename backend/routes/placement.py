@@ -35,6 +35,7 @@ def place_item_api(data: PlacementRequest):
         conn.close()
 
 
+# ✅ FIXED RETRIEVE API
 @router.post("/retrieve/{item_id}")
 def retrieve_item_api(item_id: str):
     conn = get_connection()
@@ -42,9 +43,21 @@ def retrieve_item_api(item_id: str):
 
     try:
         cursor.callproc("retrieve_item", [item_id])
-        return {"message": f"Item {item_id} retrieved successfully"}
+        print("SUCCESS retrieving:", item_id)  # ✅ debug log
+
+        return {
+            "status": "success",
+            "message": f"Item {item_id} retrieved successfully"
+        }
+
     except Exception as e:
-        return {"error": str(e)}
+        print("ERROR retrieving:", e)  # ✅ debug log
+
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
     finally:
         cursor.close()
         conn.close()

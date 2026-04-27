@@ -1,0 +1,64 @@
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.main-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  transition: margin-left 0.4s ease;
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 2rem 2rem 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon-cyan) transparent;
+}
+
+/* Notification Overlay */
+.notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 2rem;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  overflow: hidden;
+  border-left: none;
+}
+
+.notif-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+}
+
+.notification.success .notif-bar { background: var(--neon-cyan); box-shadow: var(--glow-cyan); }
+.notification.error .notif-bar { background: #ff4444; box-shadow: 0 0 10px #ff4444; }
+
+.notification p {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    position: absolute;
+  }
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+}
